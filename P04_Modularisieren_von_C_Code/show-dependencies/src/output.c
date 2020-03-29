@@ -36,10 +36,12 @@ static size_t dependencies(file_t files[], size_t len, size_t curr)
 		if (files[file].level == level + 1) {
 			// Write to stdout "  file -> include;\n" where file and include are the DOT node names of the respective files
 			// BEGIN-STUDENTS-TO-ADD-CODE
-
-
-
-
+			
+			printf("  "); 
+			print_node(files[curr]);
+			printf(" -> "); 
+			print_node(files[file]);
+			printf(";\n");
 
 
 			// END-STUDENTS-TO-ADD-CODE
@@ -64,7 +66,9 @@ void output_dot(const data_t data)
 		// BEGIN-STUDENTS-TO-ADD-CODE
 
 
-
+		printf("  ");
+		print_node(data.files[file]);
+		printf(" [label=\"%s\"];\n", data.files[file].name);
 
 		
 		// END-STUDENTS-TO-ADD-CODE
@@ -78,9 +82,9 @@ void output_dot(const data_t data)
 				// Write to stdout "    file;\n" where file is the DOT node name
 				// BEGIN-STUDENTS-TO-ADD-CODE
 
-
-
-
+				printf("    "); 
+				print_node(data.files[file]);
+				printf(";\n"); 
 
 				// END-STUDENTS-TO-ADD-CODE
 			}

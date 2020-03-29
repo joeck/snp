@@ -29,7 +29,22 @@ int main()
 {
 	// BEGIN-STUDENTS-TO-ADD-CODE
 
+	FILE *file;
+	file = stdin;
 
+	int c;
+	printf("\033[0m\n");
+	while ((c = getc(file)) != EOF){
+		if (c == '\n'){
+			printf("\033[0m\n");
+		} else if (c == ' ') {
+			printf("\033[47m ");
+		} else {
+			printf("\033[40m ");
+		}
+	}
+	printf("\033[0m\n");
+	fclose(file);
 	// END-STUDENTS-TO-ADD-CODE
 	return EXIT_SUCCESS;
 }
