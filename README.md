@@ -1,2 +1,2 @@
-# snp-lab-code
-Code für die Praktika zur Vorlesung Systemnahe Programmierung
+# snp
+Systemnahe Programmierung FS20
