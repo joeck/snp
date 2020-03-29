@@ -15,8 +15,7 @@ static void assert_pos(model_pos_t pos)
     assert(pos.col < MODEL_SIZE);
 }
 
-/**
- * @brief                    Sets the field on the board to the given state.
+/* @brief                    Sets the field on the board to the given state.
  * @param  instance [INOUT]  The instance which holds the state.
  * @param  pos      [IN]     The affected field.
  * @param  state    [IN]     The new state of the field.
@@ -50,14 +49,12 @@ void model_init(model_t *instance)
 
     // Instructions to the students:
     // set all fields of the board to model_state_none
-    // BEGIN-STUDENTS-TO-ADD-CODE
 
-
-
-
-
-
-    // END-STUDENTS-TO-ADD-CODE
+    for (int c = 0; c < MODEL_SIZE; c++){
+	for (int r = 0; r < MODEL_SIZE; r++){
+	    instance->board[c][r] = model_state_none;
+	}
+    }
 }
 
 // public API function which is documented in the header file.
