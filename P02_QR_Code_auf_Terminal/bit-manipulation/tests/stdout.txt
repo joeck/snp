@@ -1,0 +1,6 @@
+               dec   hex   oct
+your input   :   0  0x00  0000
+bit 0 is not set.
+bit 0 cleared:   0  0x00  0000
+bit 0 set    :   1  0x01  0001
+bit 0 flipped:   1  0x01  0001

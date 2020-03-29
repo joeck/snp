@@ -19,14 +19,21 @@
 
 /// @brief point of two coordinate axes
 // BEGIN-STUDENTS-TO-ADD-CODE
-
+typedef struct {
+	double x;
+	double y;
+} point_t;
 
 
 // END-STUDENTS-TO-ADD-CODE
 
 /// @brief box with an origin point and a dimension w and h
 // BEGIN-STUDENTS-TO-ADD-CODE
-
+typedef struct{
+	point_t p;
+	double w;
+	double h;
+} box_t;
 
 
 // END-STUDENTS-TO-ADD-CODE
@@ -34,7 +41,11 @@
 /// @brief triangle given by three points a, b, and c
 // BEGIN-STUDENTS-TO-ADD-CODE
 
-
+typedef struct {
+	point_t a;
+	point_t b;
+	point_t c;
+} triangle_t;
 
 // END-STUDENTS-TO-ADD-CODE
 
@@ -47,6 +58,15 @@
  */
 // BEGIN-STUDENTS-TO-ADD-CODE
 
+static int compare_double(double a, double b){
+	double tolerance = 0.05;
+	if (fabs(a-b) <= tolerance){
+		return 0;
+	} else if (a < b){
+		return -1;
+	}
+	return 1;
+}
 
 
 // END-STUDENTS-TO-ADD-CODE
@@ -59,7 +79,12 @@
  * @returns the return value from compare_double() when given the areas of both boxes as parameter to compare_double()
  */
 // BEGIN-STUDENTS-TO-ADD-CODE
+int compare_area(box_t a, box_t b){
+	double area_a = a.h * a.w;
+	double area_b = b.h * b.w;
 
+	return compare_double(area_a, area_b);
+}
 
 
 // END-STUDENTS-TO-ADD-CODE
@@ -71,7 +96,10 @@
  * @returns compare_double() == 0 with the boxes area and 0 as parameters
  */
 // BEGIN-STUDENTS-TO-ADD-CODE
-
+int is_zero_area(box_t box){
+	double area_box = box.h * box.w;
+	return (compare_double(area_box, 0.0) == 0);
+}
 
 
 // END-STUDENTS-TO-ADD-CODE
@@ -87,7 +115,24 @@
  *
  */
 // BEGIN-STUDENTS-TO-ADD-CODE
+box_t triangle_bounding_box(triangle_t t){
+	box_t box;
+	point_t point;
 
+	double min_x = fmin(t.a.x, fmin(t.b.x, t.c.x));
+	double min_y = fmin(t.a.y, fmin(t.b.y, t.c.y));
+
+	double max_x = fmax(t.a.x, fmax(t.b.x, t.c.x));
+	double max_y = fmax(t.a.y, fmax(t.b.y, t.c.y));
+
+	point.x = min_x;
+	point.y = min_y;
+	box.p = point;
+	box.h = max_y - min_y;
+	box.w = max_x - min_x;
+
+	return box;
+}
 
 
 // END-STUDENTS-TO-ADD-CODE
