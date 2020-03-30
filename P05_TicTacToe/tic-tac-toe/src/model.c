@@ -26,14 +26,9 @@ static void set_state(model_t *instance, model_pos_t pos, model_state_t state)
 
     // Instructions to the students:
     // set the field of the board to the new state
-    // BEGIN-STUDENTS-TO-ADD-CODE
-
-
     
-
-
-    
-    // END-STUDENTS-TO-ADD-CODE
+    //same as (*instance).board
+    instance->board[pos.col][pos.row] = state;
 }
 
 // public API function which is documented in the header file.
@@ -65,13 +60,8 @@ model_state_t model_get_state(model_t *instance, model_pos_t pos)
 
     // Instructions to the students:
     // replace the stub implementation my access to the field at the given position.
-    // BEGIN-STUDENTS-TO-ADD-CODE
 
-
-    return model_state_none; // stub 
-
-
-    // END-STUDENTS-TO-ADD-CODE
+    return instance->board[pos.col][pos.row];
 }
 
 // public API function which is documented in the header file.
@@ -137,14 +127,13 @@ int model_can_move(model_t *instance)
         // scan all fields: return 1 with first field which equals model_state_none
         // BEGIN-STUDENTS-TO-ADD-CODE
 
-
-
-
-
-
-
-
-        // END-STUDENTS-TO-ADD-CODE
+	for (int c = 0; c < MODEL_SIZE; c++){
+	    for (int r = 0; r < MODEL_SIZE; r++){
+		if (instance->board[c][r] == model_state_none){
+		    return 1;
+		}
+	    }
+	}
     }
     return 0;
 }
