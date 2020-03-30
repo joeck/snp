@@ -1,7 +1,6 @@
 # Custom
 */bin/*
-*/test/*
-*/runtest/*
+*/tests/*
 
 # Prerequisites
 *.d
