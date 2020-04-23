@@ -57,6 +57,7 @@ void stack_destroy(stack_t *instance)
     // BEGIN-STUDENTS-TO-ADD-CODE
 
     free(instance->stack);
+    free(instance);
 
     // END-STUDENTS-TO-ADD-CODE
 }
