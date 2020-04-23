@@ -11,7 +11,9 @@
  * @file
  * @brief Lab implementation
  */
-#include "list.c"
+#include <stdio.h>
+#include <stdlib.h>
+#include "list.h"
 
 /**
  * @brief Main entry point.
@@ -26,17 +28,18 @@ int main(int argc, char* argv[])
 	node_t *anchor = malloc(sizeof(node_t));
 	list_clear(anchor);
 
-	char input = ' ';
+	char input = '*';
 	while (input != 'E'){
 		printf("\nI(nsert), R(emove), S(how), C(lear), E(nd): ");
-		scanf("%c", input);
+		scanf("%c", &input);
 
 		switch (input){
 			case 'i':
 			case 'I':
+				printf("\n---Insert---");
 				printf("\nName: ");
 				person_t *new_person = malloc(sizeof(person_t));
-				if (new_person = NULL){
+				if ((new_person = NULL)){
 					printf("\nCouldn't allocate memory. List is too big!");
 					break;
 				}
@@ -44,15 +47,17 @@ int main(int argc, char* argv[])
 				printf("\nFirst name: ");
 				scanf("%20s", new_person->first_name);
 				printf("\nAge: ");
-				scanf("%u", new_person->age);
+				scanf("%u", &new_person->age);
 				printf("adding new Person(Name:'%s',Firstname:'%s',Age:%u)",new_person->name,new_person->first_name,new_person->age);
 				list_insert(anchor, new_person);
 				break;
 			
 			case 'r':
 			case 'R':
+				printf("\n---Delete---");
+				printf("\nName: ");
 				person_t *remove_person = malloc(sizeof(person_t));
-				if (remove_person = NULL){
+				if ((remove_person = NULL)){
 					printf("\nCouldn't allocate memory. List is too big!");
 					break;
 				}
@@ -61,29 +66,30 @@ int main(int argc, char* argv[])
 				scanf(" %20s",remove_person->first_name);
 				printf("Age: ");
 				scanf(" %u",&remove_person->age);
-				printf("removing Person(Name:'%s',Firstname:'%s',Age:%u)",remove_person->name,remove_person->first_name,remove_person->age);
+				printf("removing Person(Name:'%s', Firstname:'%s', Age:%u)",remove_person->name,remove_person->first_name,remove_person->age);
 				list_remove(anchor,remove_person);
 				break;
 
 			case 's':
 			case 'S':
 				list_show(anchor);
+				printf("\n---Show---");
 				break;
 
 			case 'c':
 			case 'C':
-				int result = list_clear(anchor);
-				if (result = 1){
-					return EXIT_FAILURE;
-				}
+				printf("\n---Clear---");
+				list_clear(anchor);
 				break;
 
 			case 'e':
 			case 'E':
 				printf("Goodbye!");
+				input = 'E';
 				break;
 
 			default:
+				printf("\nNo action is mapped to this key...");
 				break;
 		}
 	}
