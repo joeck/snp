@@ -7,8 +7,11 @@ void list_insert(node_t *anchor, const person_t *person){
     node_t *curr_anchor = anchor;
     while (anchor != curr_anchor->next){
         int compare = person_compare(person, &curr_anchor->next->content);
-        if (compare = 0 || compare < 0){
+        if (compare < 0){
             break;
+        } else if (compare = 0){
+            printf("\nPerson already exists");
+            return;
         }
         curr_anchor = curr_anchor->next;
     }
@@ -19,28 +22,38 @@ void list_insert(node_t *anchor, const person_t *person){
 }
 
 void list_remove(node_t *anchor, const person_t *person){
-    int compare = person_compare(&anchor->next->content, person);
+    int compare = person_compare(person, &anchor->next->content);
 
-    if(compare > 0){
+    if(compare < 0){
         list_remove(anchor->next, person);
-    } else if (compare < 0){
+    } else if (compare > 0){
+        printf("\nThat person doesn't exist, please check your spelling.");
         return;
-    } else {
+    } else if (compare = 0) {
         node_t *new_next = anchor->next->next;
         free (anchor->next);
         anchor->next = new_next;
+    } else {
+        printf("\nWe ran into an unexpected error. Sorry");
     }
 }
 
-void list_clear(node_t *anchor){
+int list_clear(node_t *anchor){
     if (anchor->next != NULL){
         node_t *new_anchor = anchor->next;
         anchor->next = NULL;
         list_clear(new_anchor);
     }
     free(anchor);
+
+    //create new anchor of linked list
     anchor = malloc(sizeof(node_t));
+    if (anchor = NULL){
+        printf("We couldn't allocate any memory. Aborting!");
+        return EXIT_FAILURE;
+    }
     *(anchor) = (node_t) {(person_t) {"", "", 0}, anchor};
+    return EXIT_SUCCESS;
 }
 
 void list_show(node_t *anchor){

@@ -11,7 +11,7 @@ void list_insert(node_t *anchor, const person_t *person);
 
 void list_remove(node_t *anchor, const person_t *person);
 
-void list_clear();
+int list_clear(node_t *anchor);
 
 void list_show(node_t *anchor);
 
