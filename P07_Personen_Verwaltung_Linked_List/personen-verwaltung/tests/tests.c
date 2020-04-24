@@ -18,6 +18,8 @@
 #include <assert.h>
 #include <CUnit/Basic.h>
 #include "test_utils.h"
+#include "list.h"
+#include "person.h"
 
 #ifndef TARGET // must be given by the make file --> see test target
 #error missing TARGET define
@@ -55,12 +57,19 @@ static void test_person_compare(void)
 {
 	// BEGIN-STUDENTS-TO-ADD-CODE
 	// arrange
-
-	// act
-	CU_FAIL("missing test");
-	
+	person_t a = (person_t) {"a", "a", 1};
+	person_t aa = (person_t) {"a", "a", 2};
+	person_t b = (person_t) {"b", "b", 2};
 	// assert
-	
+	CU_ASSERT(person_compare(&a, &b) < 0);
+	CU_ASSERT(person_compare(&a, &aa) < 0);
+
+	CU_ASSERT(person_compare(&a, &a) == 0);
+	CU_ASSERT(person_compare(&aa, &aa) == 0);
+	CU_ASSERT(person_compare(&b, &b) == 0);
+
+	CU_ASSERT(person_compare(&b, &a) > 0);
+	CU_ASSERT(person_compare(&aa, &a) > 0);
 	// END-STUDENTS-TO-ADD-CODE
 }
 
@@ -68,12 +77,12 @@ static void test_list_insert(void)
 {
 	// BEGIN-STUDENTS-TO-ADD-CODE
 	// arrange
-
-	// act
-	CU_FAIL("missing test");
-	
+	node_t *anchor = malloc(sizeof(node_t));
+	*(anchor) = (node_t) {(person_t) {"", "", 0}, anchor};
+	person_t a = (person_t) {"a", "a", 1};
+	list_insert(anchor, &a);
 	// assert
-	
+	CU_ASSERT(person_compare(&anchor->next->content, &a) == 0);
 	// END-STUDENTS-TO-ADD-CODE
 }
 
@@ -81,12 +90,15 @@ static void test_list_remove(void)
 {
 	// BEGIN-STUDENTS-TO-ADD-CODE
 	// arrange
+	node_t *anchor = malloc(sizeof(node_t));
+	*(anchor) = (node_t) {(person_t) {"", "", 0}, anchor};
+	person_t a = (person_t) {"a", "a", 1};
 
-	// act
-	CU_FAIL("missing test");
-	
+	list_insert(anchor, &a);
+	list_remove(anchor, &a);
 	// assert
-	
+	CU_ASSERT(anchor->next == anchor);
+	CU_ASSERT(person_compare(&anchor->next->content,&anchor->content) == 0);
 	// END-STUDENTS-TO-ADD-CODE
 }
 
@@ -94,12 +106,19 @@ static void test_list_clear(void)
 {
 	// BEGIN-STUDENTS-TO-ADD-CODE
 	// arrange
+	node_t *anchor = malloc(sizeof(node_t));
+	*(anchor) = (node_t) {(person_t) {"", "", 0}, anchor};
+	person_t a = (person_t) {"a", "a", 1};
+	person_t aa = (person_t) {"a", "a", 2};
+	person_t b = (person_t) {"b", "b", 2};
 
-	// act
-	CU_FAIL("missing test");
-	
+	list_insert(anchor, &a);
+	list_insert(anchor, &aa);
+	list_insert(anchor, &b);
+	list_clear(anchor);	
 	// assert
-	
+	CU_ASSERT(anchor->next == anchor);
+	CU_ASSERT(person_compare(&anchor->next->content,&anchor->content) == 0);
 	// END-STUDENTS-TO-ADD-CODE
 }
 

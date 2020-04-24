@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "list.h"
+#include "person.h"
 
 /**
  * @brief Main entry point.
@@ -26,75 +27,74 @@ int main(int argc, char* argv[])
 	// BEGIN-STUDENTS-TO-ADD-CODE
 
 	node_t *anchor = malloc(sizeof(node_t));
-	list_clear(anchor);
+	*(anchor) = (node_t) {(person_t) {"", "", 0}, anchor};
 
 	char input = '*';
 	while (input != 'E'){
 		printf("\nI(nsert), R(emove), S(how), C(lear), E(nd): ");
-		scanf("%c", &input);
+		scanf(" %c", &input);
 
 		switch (input){
 			case 'i':
 			case 'I':
-				printf("\n---Insert---");
-				printf("\nName: ");
+				printf("---Insert---");
 				person_t *new_person = malloc(sizeof(person_t));
-				if ((new_person = NULL)){
-					printf("\nCouldn't allocate memory. List is too big!");
+				if (!new_person){
+					printf("Couldn't allocate memory. List is too big!\n");
 					break;
 				}
+				printf("\nName: ");
 				scanf("%20s", new_person->name);
-				printf("\nFirst name: ");
+				printf("First name: ");
 				scanf("%20s", new_person->first_name);
-				printf("\nAge: ");
+				printf("Age: ");
 				scanf("%u", &new_person->age);
-				printf("adding new Person(Name:'%s',Firstname:'%s',Age:%u)",new_person->name,new_person->first_name,new_person->age);
 				list_insert(anchor, new_person);
+				printf("------\n");
 				break;
 			
 			case 'r':
 			case 'R':
-				printf("\n---Delete---");
+				printf("---Delete---");
 				printf("\nName: ");
 				person_t *remove_person = malloc(sizeof(person_t));
-				if ((remove_person = NULL)){
-					printf("\nCouldn't allocate memory. List is too big!");
+				if (!remove_person){
+					printf("Couldn't allocate memory. List is too big!\n");
 					break;
 				}
-				scanf(" %20s",remove_person->name);
+				scanf("%20s",remove_person->name);
 				printf("First Name: ");
-				scanf(" %20s",remove_person->first_name);
+				scanf("%20s",remove_person->first_name);
 				printf("Age: ");
-				scanf(" %u",&remove_person->age);
-				printf("removing Person(Name:'%s', Firstname:'%s', Age:%u)",remove_person->name,remove_person->first_name,remove_person->age);
+				scanf("%u",&remove_person->age);
 				list_remove(anchor,remove_person);
+				printf("------\n");
 				break;
 
 			case 's':
 			case 'S':
+				printf("---Show---\n");
 				list_show(anchor);
-				printf("\n---Show---");
 				break;
 
 			case 'c':
 			case 'C':
-				printf("\n---Clear---");
+				printf("---Clear---\n");
 				list_clear(anchor);
 				break;
 
 			case 'e':
 			case 'E':
-				printf("Goodbye!");
+				printf("Goodbye!\n");
 				input = 'E';
+				list_clear(anchor);
 				break;
 
 			default:
-				printf("\nNo action is mapped to this key...");
+				printf("No action is mapped to this key...\n");
 				break;
 		}
 	}
-	
-	list_clear(anchor);
     
 	// END-STUDENTS-TO-ADD-CODE
     return EXIT_SUCCESS;
