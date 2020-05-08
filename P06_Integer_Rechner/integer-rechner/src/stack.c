@@ -38,11 +38,11 @@ stack_t *stack_new(size_t max_elements)
 
     instance = malloc(sizeof(stack_t));
     if (instance == NULL){
-	error_fatal_errno("stack_new: instance");
+	    error_fatal_errno("stack_new: instance");
     }
     instance->stack = malloc(sizeof(stack_value_t) * max_elements);
     if (instance->stack == NULL){
-	error_fatal_errno("stack_new: stack");
+	    error_fatal_errno("stack_new: stack");
     }
     instance->top = instance->stack - 1;
     instance->full = instance->top + max_elements;

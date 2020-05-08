@@ -29,11 +29,11 @@ static char *malloc_copy(const char *s)
 {
     char *p = NULL;
     // BEGIN-STUDENTS-TO-ADD-CODE
-
-
-
-
-
+    if(s == NULL) {return NULL;}
+    p = malloc((strlen(s) + 1) * sizeof(char));
+    if(p){
+        strcpy(p, s);
+    }
     // END-STUDENTS-TO-ADD-CODE
     return p;       
 }
@@ -48,18 +48,16 @@ static char *malloc_copy(const char *s)
  */
 static size_t split_buffer_inplace(char buffer[], char sep)
 {
-    size_t n = 0;
+    size_t n = 1;
     // BEGIN-STUDENTS-TO-ADD-CODE
-
-
-
-
-
-
-
-
-
-
+    if (buffer != NULL){
+        char *index = strchr(buffer, sep);
+        while (index != NULL){
+            ++n;
+            *index = '\0';
+            index = strchr(index + 1, sep);
+        }
+    }
     // END-STUDENTS-TO-ADD-CODE
     return n;
 }
@@ -80,9 +78,47 @@ static void list_executables(size_t i, const char *path)
     //   fi
     const char *p = path && strlen(path) ? path : "."; // replace an empty path by "." as current directory to allow for appending /name
     // BEGIN-STUDENTS-TO-ADD-CODE
+    struct stat fileStat;
+    if (stat(p, &fileStat) == -1){
+        printf ("Couldn't get stats for: '%s'\n", p);
+        return;
+    }
 
+    if(S_ISDIR(fileStat.st_mode) && access(p,X_OK) != -1){
+        
+        struct dirent *pChild;
+        DIR* pDirectory = opendir(p);
+        if (pDirectory == NULL){
+            printf ("Couldn't open file: '%s'\n", p);
+            return;
+        }
 
+        size_t dirLength = strlen(p);
+        char *childPath = malloc(dirLength + 1 + 200);
+        if (!childPath){
+            printf ("Couldn't allocate memery for child: '%s'\n", p);
+            return;
+        }
+        strcpy(childPath, p);
+        childPath[dirLength] = '/';
 
+        while ((pChild = readdir(pDirectory)) != NULL){
+            char *endOfPath = childPath + dirLength + 1;
+            strcpy(childPath + dirLength + 1, pChild->d_name);
+
+            struct stat childStat;
+            if (stat(childPath, &childStat) < 0){
+                printf ("Couldn't get stats for: '%s'\n", childPath);
+                continue;
+            }
+
+            if(S_ISREG(childStat.st_mode) && access(childPath, X_OK) != -1){
+                printf("%li:%s:%s\n",i,p,pChild->d_name);
+            }
+        }
+        closedir(pDirectory);
+        free(childPath);
+    }
 
 
 

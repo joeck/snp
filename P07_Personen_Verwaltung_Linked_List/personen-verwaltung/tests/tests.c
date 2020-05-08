@@ -80,9 +80,12 @@ static void test_list_insert(void)
 	node_t *anchor = malloc(sizeof(node_t));
 	*(anchor) = (node_t) {(person_t) {"", "", 0}, anchor};
 	person_t a = (person_t) {"a", "a", 1};
+	person_t b = (person_t) {"b", "b", 2};
 	list_insert(anchor, &a);
+	list_insert(anchor, &b);
 	// assert
 	CU_ASSERT(person_compare(&anchor->next->content, &a) == 0);
+	CU_ASSERT(person_compare(&anchor->next->next->content, &b) == 0);
 	// END-STUDENTS-TO-ADD-CODE
 }
 
